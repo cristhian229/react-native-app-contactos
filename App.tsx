@@ -1,117 +1,127 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+/* eslint-disable react-native/no-inline-styles */
 
-import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import * as React from 'react';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { SafeAreaView } from 'react-native-safe-area-context';
+// import Icon from 'react-native-vector-icons/Ionicons';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
+interface Item {
+  id: string;
+  name: string;
+  phone: string;
+  email?: string;
+  image?: string;
+}
 
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+
+const DATA: Item[] = [
+  {id: '1', name: 'Catalina Grisales', phone: '+34 6668887777', email: 'catalina@gmail.com',image: 'https://habrastorage.org/web/21c/544/60f/21c54460f6e4473cab334c14b7394e18.jpg' },
+  {id: '2', name: 'Juan Martinez', phone: '+34 6668887777', email: 'juan@gmail.com', image: 'https://habrastorage.org/web/21c/544/60f/21c54460f6e4473cab334c14b7394e18.jpg'},
+  {id: '3', name: 'Maria Perez', phone: '+34 6668887777', email: 'maria@gmail.com',image: 'https://habrastorage.org/web/21c/544/60f/21c54460f6e4473cab334c14b7394e18.jpg' },
+  {id: '4', name: 'Pedro Maloy', phone: '+34 6668887777', email: 'pedro@gmail.com',image: 'https://habrastorage.org/web/21c/544/60f/21c54460f6e4473cab334c14b7394e18.jpg' },
+  {id: '5', name: 'Sofia Ramirez', phone: '+34 6668888888', email: 'sofia@gmail.com',image: 'https://habrastorage.org/web/21c/544/60f/21c54460f6e4473cab334c14b7394e18.jpg' },
+  {id: '6', name: 'Diego Torres', phone: '+34 6668889999', email: 'diego@gmail.com',image: 'https://habrastorage.org/web/21c/544/60f/21c54460f6e4473cab334c14b7394e18.jpg' },
+  {id: '7', name: 'Laura Gomez', phone: '+34 6668877777', email: 'laura@gmail.com',image: 'https://habrastorage.org/web/21c/544/60f/21c54460f6e4473cab334c14b7394e18.jpg' },
+  {id: '8', name: 'Carlos Ruiz', phone: '+34 6668866666', email: 'carlos@gmail.com',image: 'https://habrastorage.org/web/21c/544/60f/21c54460f6e4473cab334c14b7394e18.jpg' },
+  {id: '9', name: 'Ana Morales', phone: '+34 6668855555', email: 'ana@gmail.com',image: 'https://habrastorage.org/web/21c/544/60f/21c54460f6e4473cab334c14b7394e18.jpg' },
+  {id: '10', name: 'Fernando Castillo', phone: '+34 6668844444', email: 'fernando@gmail.com',image: 'https://habrastorage.org/web/21c/544/60f/21c54460f6e4473cab334c14b7394e18.jpg' },
+  {id: '11', name: 'Claudia Ortiz', phone: '+34 6668833333', email: 'claudia@gmail.com',image: 'https://habrastorage.org/web/21c/544/60f/21c54460f6e4473cab334c14b7394e18.jpg' },
+  {id: '12', name: 'Julian Salazar', phone: '+34 6668822222', email: 'julian@gmail.com',image: 'https://habrastorage.org/web/21c/544/60f/21c54460f6e4473cab334c14b7394e18.jpg' },
+];
+
+
+
+
+
+const FlatListScreen = ({ navigation }: any) => {
+  const renderItem = ({item}: {item: Item}) => (
+    <TouchableOpacity style={styles.contacts}
+    onPress={() => navigation.navigate('Details', { item: item })}>
+      <Text>{item.name}</Text>
+      <Text>{item.phone}</Text>
+    </TouchableOpacity>
+  );
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
+    <View>
+      <FlatList
+        data={DATA}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
+      />
+    </View>
+  );
+};
+
+
+function HomeScreen({ navigation }: any) {
+  return (
+    <View>
+    <SafeAreaView>
+      <View >
+        <Text style= {styles.label}>Contactos </Text>
+        <FlatListScreen navigation={navigation}/>
+      </View>
+    </SafeAreaView>
     </View>
   );
 }
 
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
+function DetailsScreen({ route }: any) {
+  const { item } = route.params;
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Image source={{uri: item.image}} style={styles.image}/>
+      <Text>Nombre: {item.name}</Text>
+      <Text>Teléfono: {item.phone}</Text>
+      <Text>Email: {item.email}</Text>
+    </View>
   );
 }
 
+const Stack = createNativeStackNavigator();
+
+function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Details" component={DetailsScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+
+
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
+  container:{
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'},
+  lista:{
+      alignItems: 'center',
+      justifyContent: 'center',
+      },
+  contacts:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 15,
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: '#ccc',
+    backgroundColor: 'oldlace',
+        },
+  label: {
+    textAlign: 'center',
+    marginBottom: 12,
+    fontSize: 38},
+  image: {
+    width: 80,
+    height: 80,
+    borderRadius: 20,
+    marginBottom: 15,
   },
 });
 
