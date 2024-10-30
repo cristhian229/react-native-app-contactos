@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { useState } from "react";
-import { Button, StyleSheet, View } from 'react-native';
+import { Button, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Alert, TextInput } from "react-native";
 import { Item } from "./Flatlistscreen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import ImagePicker from '../components/ImagePicker';
 
 
 const AddContactScreen = ({ navigation }: any) => {
@@ -57,12 +58,9 @@ const AddContactScreen = ({ navigation }: any) => {
         value={email}
         onChangeText={setEmail}
       />
-      <TextInput
-        style={styles.input}
-        placeholder="Imagen (URL)"
-        value={image}
-        onChangeText={setImage}
-      />
+      <TouchableOpacity style={styles.button} >
+        <ImagePicker handleImageChange={setImage} />
+      </TouchableOpacity>
       <Button title="Agregar a Contactos" onPress={handleAddContact} />
     </View>
     );
@@ -78,6 +76,11 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       marginBottom: 10,
       paddingHorizontal: 8,
+    },
+    button: {
+      padding: 10,
+      borderRadius: 5,
+      backgroundColor: '#f0f0f0',
     },
   });
 
