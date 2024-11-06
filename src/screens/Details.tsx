@@ -1,44 +1,93 @@
-/* eslint-disable react-native/no-inline-styles */
-import { useNavigation } from '@react-navigation/native';
 import * as React from 'react';
+import Icon from "react-native-vector-icons/Ionicons";
+import { View, Text, Alert, StyleSheet, ScrollView } from 'react-native';
+import { ImageContainer } from '../atoms/imageContainer';
+import Mapa from '../mapview/map';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { View, Text, StyleSheet, Image, Button, Alert } from 'react-native';
-
-function DetailsScreen({ route }: any) {
+function DetailsScreen({ route, navigation }: any) {
     const { item, deleteContactFunction } = route.params;
-    const navigation = useNavigation();
+
     const deleteContact = () => {
         deleteContactFunction(item.id);
         navigation.goBack();
     };
+
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Image source={{uri: item.image}} style={styles.image}/>
-        <Text>Nombre: {item.name}</Text>
-        <Text>Teléfono: {item.phone}</Text>
-        <Text>Email: {item.email}</Text>
-        <Button title="Eliminar" onPress={() => {
-      Alert.alert(
-        'Eliminar Contacto',
-        '¿Estás seguro de que quieres eliminar este contacto?',
-        [
-          { text: 'Cancelar' },
-          { text: 'Eliminar', onPress: () => deleteContact() },
-        ]
-      );
-      }}/>
-      </View>
+        <SafeAreaView style={styles.safeAreaContainer}>
+            <ScrollView contentContainerStyle={styles.scrollContainer}>
+                <View style={styles.iconsContainer}>
+                    <Icon
+                        name="create"
+                        size={75}
+                        style={styles.icon}
+                        onPress={() => navigation.navigate('Add', { item })}
+                    />
+                    <Icon
+                        name="trash"
+                        size={75}
+                        style={styles.icon}
+                        onPress={() => {
+                            Alert.alert(
+                                'Eliminar Contacto',
+                                '¿Estás seguro de que quieres eliminar este contacto?',
+                                [
+                                    { text: 'Cancelar' },
+                                    { text: 'Eliminar', onPress: () => deleteContact() },
+                                ]
+                            );
+                        }}
+                    />
+                </View>
+
+                <View style={styles.detailsContainer}>
+                    <ImageContainer uri={item.image} />
+                    <Text style={styles.text}>Nombre: {item.name}</Text>
+                    <Text style={styles.text}>Teléfono: {item.phone}</Text>
+                    <Text style={styles.text}>Email: {item.email}</Text>
+                </View>
+
+                <View style={styles.mapContainer}>
+                    <Mapa />
+                </View>
+            </ScrollView>
+        </SafeAreaView>
     );
 }
 
-
-  const styles = StyleSheet.create({
-    image: {
-      width: 80,
-      height: 80,
-      borderRadius: 20,
-      marginBottom: 15,
+const styles = StyleSheet.create({
+    safeAreaContainer: {
+        flex: 1,
+        backgroundColor: '#F5FCFF',
     },
-  });
+    scrollContainer: {
+        padding: 10,
+        alignItems: 'center',
+        flexGrow: 1,
+    },
+    iconsContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '100%',
+        marginVertical: 20,
+    },
+    icon: {
+        color: '#192A51',
+    },
+    detailsContainer: {
+        width: '100%',
+        alignItems: 'center',
+        marginBottom: 20,
+    },
+    text: {
+        fontSize: 16,
+        marginVertical: 5,
+    },
+    mapContainer: {
+        width: '100%',
+        height: 300,
+        marginTop: 20,
+    },
+});
 
 export default DetailsScreen;

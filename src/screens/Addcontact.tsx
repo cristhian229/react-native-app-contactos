@@ -1,17 +1,32 @@
 import * as React from 'react';
 import { useState } from "react";
-import { Button, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Alert, TextInput } from "react-native";
 import { Item } from "./Flatlistscreen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ImagePicker from '../components/ImagePicker';
 
 
-const AddContactScreen = ({ navigation }: any) => {
+const AddContactScreen = ({ navigation, route }: any) => {
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
     const [email, setEmail] = useState('');
     const [image, setImage] = useState('');
+    const [editMode, setEditMode] = useState(false);
+    const [contactId, setContactId] = useState<string | null>(null);
+
+    React.useEffect(() => {
+      if (route.params?.item){
+        const { item } = route.params;
+        setName(item.name);
+        setPhone(item.phone);
+        setEmail(item.email);
+        setImage(item.image);
+        setContactId(item.id);
+        setEditMode(true);
+      }
+    }, [route.params]);
+
 
     const handleAddContact = async () => {
       if (!name || !phone) {
@@ -30,9 +45,22 @@ const AddContactScreen = ({ navigation }: any) => {
       try {
         const existingContacts = await AsyncStorage.getItem('contacts');
         const contacts = existingContacts ? JSON.parse(existingContacts) : [];
+
+        if (editMode) {
+          const contactIndex = contacts.findIndex((contact: any) => contact.id === contactId);
+        if (contactIndex !== -1) {
+          contacts[contactIndex] = newContact;
+        }
+      } else {
+        const exists = contacts.some((contact: any) => contact.phone === phone);
+        if (exists) {
+          Alert.alert('Error', 'Ya existe un contacto con este número de teléfono.');
+          return;
+        }
         contacts.push(newContact);
+        }
         await AsyncStorage.setItem('contacts', JSON.stringify(contacts));
-        navigation.goBack(); // Regresa a la pantalla anterior
+        navigation.navigate('Contactos');
       } catch (error) {
         console.error(error);
       }
@@ -40,6 +68,7 @@ const AddContactScreen = ({ navigation }: any) => {
 
     return (
         <View style={styles.container}>
+        <ImagePicker handleImageChange={setImage} contact={route.params?.item} />
       <TextInput
         style={styles.input}
         placeholder="Nombre"
@@ -58,16 +87,16 @@ const AddContactScreen = ({ navigation }: any) => {
         value={email}
         onChangeText={setEmail}
       />
-      <TouchableOpacity style={styles.button} >
-        <ImagePicker handleImageChange={setImage} />
+      <TouchableOpacity onPress={handleAddContact} style={styles.button} >
+        <Text style={styles.buttonText}>Añadir</Text>
       </TouchableOpacity>
-      <Button title="Agregar a Contactos" onPress={handleAddContact} />
     </View>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
+      flex: 1,
       padding: 20,
     },
     input: {
@@ -76,11 +105,24 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       marginBottom: 10,
       paddingHorizontal: 8,
+      color: 'black',
     },
     button: {
-      padding: 10,
+      backgroundColor: '#778899',
+      paddingVertical: 15,
+      marginHorizontal: 5,
       borderRadius: 5,
-      backgroundColor: '#f0f0f0',
+      alignItems: 'center',
+      elevation: 3,
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.2,
+      shadowRadius: 3,
+
+    },
+    buttonText: {
+      color: 'oldlace',
+      fontSize: 15,
+      fontWeight: 'bold',
     },
   });
 

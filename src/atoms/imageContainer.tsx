@@ -1,5 +1,6 @@
+
 import * as React from 'react';
-import {  StyleSheet, View } from "react-native";
+import {  Image, StyleSheet, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 
 
@@ -18,7 +19,7 @@ export const ImageContainer = ({ uri, size = 80 }: Props) => {
             uri
             ? <Image source={{uri}} style={styles.image}
               resizeMode="contain" />
-            : <Icon name="person" size={75} style={{ color: '#192A51' }} />
+            : <Icon name="person" size={size} style={styles.icon} />
         }
 
     </View>
@@ -28,8 +29,6 @@ export const ImageContainer = ({ uri, size = 80 }: Props) => {
 const styles = StyleSheet.create({
     imageContainer: {
         borderRadius: 100,
-        height: 70,
-        width: 70,
         overflow: 'hidden',
         backgroundColor: '#D5C6E0',
         display: 'flex',
@@ -38,6 +37,12 @@ const styles = StyleSheet.create({
 
     },
     image: {
+        width: '100%',
+        height: '100%',
+        objectFit: 'cover',
+      },
+      icon:{
+        color: '#192A51',
         width: '100%',
         height: '100%',
         objectFit: 'cover',

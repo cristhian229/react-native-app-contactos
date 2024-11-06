@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-shadow */
 import { useEffect, useState } from "react";
 import { Platform } from "react-native";
 import { check, PERMISSIONS } from "react-native-permissions";
 
 
 
-const RNpermissions = () => {
+export const RNpermissions = () => {
     const [cameraPermission, setCameraPermission] = useState<string>('');
     const [locationPermission, setLocationPermission] = useState<string>('');
 
