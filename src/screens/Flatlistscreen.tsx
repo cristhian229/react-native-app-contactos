@@ -1,4 +1,4 @@
-/* eslint-disable react-native/no-inline-styles */
+
 /* eslint-disable no-trailing-spaces */
 import * as React from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
@@ -24,7 +24,7 @@ const FlatListScreen = ({ navigation }: any) => {
   const renderItem = ({item}: {item: Item}) => (
     <TouchableOpacity style={styles.contacts}
     onPress={() => navigation.navigate('Details', { item: item, deleteContactFunction : deleteContact })}>
-      <Text>{item.name}</Text>
+      <Text style={styles.text}>{item.name}</Text>
       <ImageContainer uri={item.image} size={50} />
     </TouchableOpacity>
   );
@@ -34,8 +34,11 @@ const FlatListScreen = ({ navigation }: any) => {
    
     return (
       <View style={styles.container}>
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>Contactos</Text>
+        </View>
         <TouchableOpacity  style={styles.button} onPress={() =>navigation.navigate('Add')}>
-          <Text style={{color: 'white'}}>Agregar Contacto</Text>
+          <Text style={styles.textButton}>Agregar Contacto</Text>
         </TouchableOpacity>
       
       
@@ -55,7 +58,7 @@ export default FlatListScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#091d26',
     flexDirection: 'column',
   },
   contacts:{
@@ -64,13 +67,12 @@ const styles = StyleSheet.create({
       padding: 15,
       borderTopWidth: 1,
       borderBottomWidth: 1,
-      borderColor: '#ccc',
-      backgroundColor: 'oldlace',
+      borderColor: '#00001a',
+      backgroundColor: '#091d26',
       alignItems: 'center',
-      color: 'black',
         },
   button: {
-            backgroundColor: '#778899', 
+            backgroundColor: '#AAC7D8', 
             paddingVertical: 15,
             paddingHorizontal: 20,
             borderRadius: 5,
@@ -78,6 +80,26 @@ const styles = StyleSheet.create({
             elevation: 3,
             shadowOpacity: 0.2,
             shadowRadius: 3,
+            color: '#091d26',
 
           },
+  text:{
+    color: '#E6E6E6',
+    fontSize: 18,
+  },
+  titleContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 84,
+  },
+  title:{
+    color: '#E6E6E6',
+    fontSize: 42,
+    fontWeight: 'bold',
+
+  },
+  textButton:{
+    color: '#091d26',
+    fontSize: 16,
+  },
 });

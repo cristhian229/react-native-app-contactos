@@ -10,7 +10,7 @@ interface Props {
     size?: number;
 }
 
-export const ImageContainer = ({ uri, size = 80 }: Props) => {
+export const ImageContainer = ({ uri, size = 150 }: Props) => {
 
     return (
         <View style={[styles.imageContainer, { width: size, height: size }]}>

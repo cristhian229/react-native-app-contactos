@@ -98,17 +98,20 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       padding: 20,
+      backgroundColor: '#091d26',
     },
     input: {
       height: 40,
       borderColor: '#ccc',
       borderWidth: 1,
-      marginBottom: 10,
+      marginBottom: 20,
       paddingHorizontal: 8,
       color: 'black',
+      backgroundColor: '#e6e6e6',
+      borderRadius: 5,
     },
     button: {
-      backgroundColor: '#778899',
+      backgroundColor: '#AAC7D8',
       paddingVertical: 15,
       marginHorizontal: 5,
       borderRadius: 5,
@@ -120,8 +123,8 @@ const styles = StyleSheet.create({
 
     },
     buttonText: {
-      color: 'oldlace',
-      fontSize: 15,
+      color: '#091d26',
+      fontSize: 16,
       fontWeight: 'bold',
     },
   });

@@ -21,9 +21,15 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Contactos" component={FlatListScreen} />
-        <Stack.Screen name="Details" component={DetailsScreen} />
-        <Stack.Screen name="Add" component={AddContactScreen} />
+        <Stack.Screen options={{ headerShown: false }} name="Contactos" component={FlatListScreen} />
+        <Stack.Screen options={{
+    headerStyle: { backgroundColor: '#091d26' },
+    headerTintColor: '#ffffff',
+  }}  name="Details" component={DetailsScreen} />
+        <Stack.Screen options={{
+    headerStyle: { backgroundColor: '#091d26' },
+    headerTintColor: '#ffffff',
+  }} name="Add" component={AddContactScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -35,7 +35,7 @@ const ImagePicker = ({handleImageChange, contact}: Props) => {
     return (
         <View>
             <View style={styles.container}>
-                <ImageContainer uri={image} size={100} />
+                <ImageContainer uri={image} size={140} />
             </View>
             <View style={styles.buttonContainer}>
                 <TouchableOpacity style={styles.button} onPress={handleSelectImage}>
@@ -60,11 +60,11 @@ const styles = StyleSheet.create({
     buttonContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginTop: 10,
+        marginTop: 25,
       },
       button: {
         flex: 1,
-        backgroundColor: '#778899',
+        backgroundColor: '#AAC7D8',
         paddingVertical: 15,
         marginHorizontal: 5,
         borderRadius: 5,
@@ -73,11 +73,11 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.2,
         shadowRadius: 3,
-        marginBottom: 15,
+        marginBottom: 50,
       },
       buttonText: {
-        color: 'oldlace',
-        fontSize: 15,
+        color: '#091d26',
+        fontSize: 16,
         fontWeight: 'bold',
       },
 });

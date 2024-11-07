@@ -19,13 +19,13 @@ function DetailsScreen({ route, navigation }: any) {
                 <View style={styles.iconsContainer}>
                     <Icon
                         name="create"
-                        size={75}
+                        size={40}
                         style={styles.icon}
                         onPress={() => navigation.navigate('Add', { item })}
                     />
                     <Icon
                         name="trash"
-                        size={75}
+                        size={40}
                         style={styles.icon}
                         onPress={() => {
                             Alert.alert(
@@ -42,9 +42,11 @@ function DetailsScreen({ route, navigation }: any) {
 
                 <View style={styles.detailsContainer}>
                     <ImageContainer uri={item.image} />
-                    <Text style={styles.text}>Nombre: {item.name}</Text>
-                    <Text style={styles.text}>Teléfono: {item.phone}</Text>
-                    <Text style={styles.text}>Email: {item.email}</Text>
+                        <Text style={styles.textTitle}>{item.name}</Text>
+                    <View style={styles.textContainer}>
+                        <Text style={styles.text}><Icon name="call-outline" size={20} />  {item.phone}</Text>
+                        <Text style={styles.text}><Icon name="at-outline" size={22} />  {item.email}</Text>
+                    </View>
                 </View>
 
                 <View style={styles.mapContainer}>
@@ -58,7 +60,7 @@ function DetailsScreen({ route, navigation }: any) {
 const styles = StyleSheet.create({
     safeAreaContainer: {
         flex: 1,
-        backgroundColor: '#F5FCFF',
+        backgroundColor: '#091d26',
     },
     scrollContainer: {
         padding: 10,
@@ -67,26 +69,44 @@ const styles = StyleSheet.create({
     },
     iconsContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'flex-end',
         width: '100%',
-        marginVertical: 20,
     },
     icon: {
-        color: '#192A51',
+        color: '#AAC7D8',
     },
     detailsContainer: {
         width: '100%',
         alignItems: 'center',
         marginBottom: 20,
     },
+    textContainer: {
+        backgroundColor: '#091d26',
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+        justifyContent: 'center',
+        marginTop: 20,
+    },
     text: {
-        fontSize: 16,
+        fontSize: 18,
         marginVertical: 5,
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: '#e6e6e6',
+    },
+    textTitle:{
+        marginTop: 20,
+        fontSize: 30,
+        color: '#e6e6e6',
     },
     mapContainer: {
-        width: '100%',
-        height: 300,
+
         marginTop: 20,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'white',
+        borderRadius: 10,
     },
 });
 
