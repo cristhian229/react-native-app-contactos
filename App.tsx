@@ -16,17 +16,18 @@ import AuthNavigation from './src/navigation/authNavigation';
 
 
 function App() {
+  const [userToken, setUserToken] = React.useState('');
   React.useEffect(() => {
     const getToken = async () => {
       const userToken = await AsyncStorage.getItem('userToken');
-      console.log(userToken);
+      return userToken;
     };
-    getToken();
+    setUserToken(getToken()as any);
   }, []);
 
   return (
     <NavigationContainer>
-      {false ? <AppNavigation /> : <AuthNavigation />}
+      { userToken? <AppNavigation /> : <AuthNavigation />}
     </NavigationContainer>
   );
 }
