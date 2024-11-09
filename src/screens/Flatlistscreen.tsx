@@ -1,7 +1,7 @@
 
 /* eslint-disable no-trailing-spaces */
 import * as React from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Button } from 'react-native';
 import { ImageContainer } from '../atoms/imageContainer';
 import { useFlatlistHook } from '../hooks/useFlatlistHook';
 
@@ -47,6 +47,7 @@ const FlatListScreen = ({ navigation }: any) => {
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
       />
+      <Button title="login" onPress={() => navigation.navigate('Login')} />
       
       
       </View>
